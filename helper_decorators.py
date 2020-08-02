@@ -6,8 +6,7 @@ def validate_client_conn(func):
         if self.client:
             return func(self, *args, **kwargs)
         else:
-            print("Client not initialized properly")
-            return None
+            raise RuntimeError("Client not initialized properly")
 
     return func_wrapper
 
@@ -18,6 +17,6 @@ def handle_client_errors(func):
             return func(self, *args, **kwargs)
         except ClientError as e:
             print("Client error: {}".format(e))
-            return None
+            raise e
 
     return func_wrapper
